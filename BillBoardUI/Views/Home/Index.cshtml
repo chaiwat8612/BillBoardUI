@@ -1,7 +1,27 @@
-﻿@{
+﻿@using BillBoardUI.Models
+@model HomeModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<br />
+
 <div class="row">
-    <!-- Implement here -->
+    
+    @foreach (NumberModel data in Model.numberList)
+    {
+        string numberId = data.numberId;
+        string status = data.status;
+        string numberValue = data.numberValue.ToString();
+
+        <div>
+
+            <p>numberId: @numberId</p>
+            <p>status: @status</p>
+            <p>value: @numberValue</p>
+
+        </div>
+    }
+
 </div>

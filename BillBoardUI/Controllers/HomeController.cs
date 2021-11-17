@@ -75,6 +75,35 @@ namespace BillBoardUI.Controllers
             return View(homeModel);
         }
 
+        public IActionResult NewNumber()
+        {
+            return View();
+        }
+
+        public IActionResult SubmitNewNumber(SaveNewNumberModel model)
+        {
+            try
+            {
+                string saveStatus = "";
+
+                saveStatus = this._numberService.SaveNewNumber(model, ref messageErrorFromService);
+
+                return RedirectToAction("NewNumber", "Home", new { statusResult = saveStatus });
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("NewNumber", "Home", new { statusResult = "504" });
+            }
+
+            //return RedirectToAction("ResultNumber", "Home");
+        }
+
+        public IActionResult ResultNumber(SaveNewNumberModel model)
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

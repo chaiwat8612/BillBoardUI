@@ -54,6 +54,34 @@ namespace BillBoardUI.Services
                 return null;
             }
         }
+
+        public string SaveNewNumber(SaveNewNumberModel saveNewNumberModel, ref string messageError)
+        {
+            string url = _urlApi + "Number/SaveNewNumber";
+
+            try
+            {
+                var resultFromAPI = this._callApiService.Post(url, saveNewNumberModel);
+                ResultModel objGet = JsonConvert.DeserializeObject<ResultModel>(resultFromAPI.Result);
+                string statusObjectGet = objGet.status.ToString();
+                string idNewNumber = objGet.data.ToString();
+
+                if (statusObjectGet == _statusSuccess)
+                {
+                    return "200";
+                }
+                else
+                {
+                    messageError += "Submit data fail";
+                    return "502";
+                }
+            }
+            catch
+            {
+                messageError += "Submit data fail server;";
+                return "503";
+            }
+        }
     }
 }
 

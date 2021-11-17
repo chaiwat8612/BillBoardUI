@@ -8,20 +8,33 @@
 <br />
 
 <div class="row">
+
+    <div class="container">
+
+        @if (Model != null)
+        {
+            @foreach (NumberModel data in Model.numberList)
+            {
+                string numberId = data.numberId;
+                string status = data.status;
+                string numberValue = data.numberValue.ToString();
+
+                <div>
+
+                    <p>numberId: @numberId</p>
+                    <p>status: @status</p>
+                    <p>value: @numberValue</p>
+                    <p>------------------------------------------</p>
+                </div>
+            }
+        }
+        else
+        {
+            <label>No data to show here.</label>
+        }
+
+    </div>
+
     
-    @foreach (NumberModel data in Model.numberList)
-    {
-        string numberId = data.numberId;
-        string status = data.status;
-        string numberValue = data.numberValue.ToString();
-
-        <div>
-
-            <p>numberId: @numberId</p>
-            <p>status: @status</p>
-            <p>value: @numberValue</p>
-
-        </div>
-    }
 
 </div>

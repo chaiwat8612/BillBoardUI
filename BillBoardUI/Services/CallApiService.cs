@@ -7,7 +7,7 @@ namespace BillBoardUI.Services
 {
     public class CallApiService
     {
-        public async Task<string> Post(string url, string data)
+        public async Task<string> Post(string url, object data)
         {
             HttpClient client = new HttpClient();
 

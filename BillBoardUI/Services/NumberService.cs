@@ -27,11 +27,11 @@ namespace BillBoardUI.Services
             _urlApi = _getConfig["URLAPI:URL_BILLBOARD_API"].ToString();
         }
 
-        internal DataSet GetNumberListHomepage(ref string messageErrorFromService)
+        internal DataSet GetNumberList(ref string messageErrorFromService)
         {
             try
             {
-                string url = _urlApi + "Number/GetNumberListHomepage";
+                string url = _urlApi + "Number/GetNumberList";
                 var resultFromAPI = this._callApiService.Get(url);
 
                 ResultModel objGet = JsonConvert.DeserializeObject<ResultModel>(resultFromAPI.Result);
@@ -44,13 +44,13 @@ namespace BillBoardUI.Services
                 }
                 else
                 {
-                    messageErrorFromService += " Not Found GetNumberListHomepage;";
+                    messageErrorFromService += " Not Found GetNumberList;";
                     return null;
                 }
             }
             catch
             {
-                messageErrorFromService += " Not Connection API Number/GetNumberListHomepage;";
+                messageErrorFromService += " Not Connection API Number/GetNumberList;";
                 return null;
             }
         }

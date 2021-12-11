@@ -13,7 +13,7 @@ using BillBoardUI.Services.Configure;
 
 namespace BillBoardUI.Controllers
 {
-    public class HomeController : Controller
+    public class NumberController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         readonly NumberService _numberService;
@@ -22,18 +22,41 @@ namespace BillBoardUI.Controllers
         ConfigureService _configureService = new ConfigureService();
         IConfiguration _getConfig;
 
-        HomeModel homeModel;
+        NumberResultModel numberResultModel;
 
-        public HomeController(IHostingEnvironment hostingEnvironment)
+        public NumberController(IHostingEnvironment hostingEnvironment)
         {
             _numberService = new NumberService();
             _hostingEnvironment = hostingEnvironment;
             _getConfig = _configureService.GetConfigFromAppsetting();
-            homeModel = new HomeModel();
+            numberResultModel = new NumberResultModel();
         }
 
+        public IActionResult NewNumber()
+        {
+            return View();
+        }
 
-        public IActionResult Index()
+        public IActionResult SubmitNewNumber(SaveNewNumberModel model)
+        {
+            try
+            {
+                string saveStatus = "";
+
+                saveStatus = this._numberService.SaveNewNumber(model, ref messageErrorFromService);
+
+                return RedirectToAction("ResultAllNumber", "Number", new { statusResult = saveStatus });
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("NewNumber", "Number", new { statusResult = "504" });
+            }
+
+            //return RedirectToAction("ResultNumber", "Home");
+        }
+
+        public IActionResult ResultAllNumber()
         {
             DataSet DSNumber = new DataSet();
             DSNumber = this._numberService.GetNumberList(ref messageErrorFromService);
@@ -66,61 +89,13 @@ namespace BillBoardUI.Controllers
                         numberList.Add(numberModel);
                     }
 
-                    homeModel.numberList = numberList;
+                    numberResultModel.numberList = numberList;
                     
                 }
 
             }
 
-            return View(homeModel);
-        }
-
-        public IActionResult NewNumber()
-        {
-            return View();
-        }
-
-        public IActionResult SubmitNewNumber(SaveNewNumberModel model)
-        {
-            try
-            {
-                string saveStatus = "";
-
-                saveStatus = this._numberService.SaveNewNumber(model, ref messageErrorFromService);
-
-                return RedirectToAction("NewNumber", "Home", new { statusResult = saveStatus });
-
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("NewNumber", "Home", new { statusResult = "504" });
-            }
-
-            //return RedirectToAction("ResultNumber", "Home");
-        }
-
-        public IActionResult ResultNumber(SaveNewNumberModel model)
-        {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(numberResultModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

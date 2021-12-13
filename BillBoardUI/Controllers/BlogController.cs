@@ -95,6 +95,11 @@ namespace BillBoardUI.Controllers
             return View();
         }
 
+        public IActionResult NewCK()
+        {
+            return View();
+        }
+
         [HttpPost]
         public int Add(int number1, int number2)
         {

@@ -39,12 +39,13 @@
     $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',
         tabsize: 2,
-        height: 120,
+        height: 'auto',
+        lineHeights: ['0.2', '0.3', '0.4'],
         toolbar: [
             ['style', ['style']],
             ['font', ['bold', 'italic','underline', 'clear']],
             ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
+            ['para', ['ul', 'ol', 'paragraph', 'height']],
             ['table', ['table']],
             ['insert', ['link', 'picture', 'video']],
             ['view', ['fullscreen', 'codeview', 'help']]
